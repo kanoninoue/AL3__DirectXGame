@@ -21,16 +21,34 @@ void GameScene::Initialize() {
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
 	// 3Dモデルの生成
 	model_ = Model::Create();
+
+	//X,Y,Z方向へのスケーリングを設定
+	worldTranceform_.scale_ = {
+	5.0f,
+	5.0f,
+	5.0f,
+	};
+
+	//X,Y,Z軸周りの平行移動を設定
+	worldTranceform_.translation_ = {
+	10.0f,
+	10.0f,
+	10.0f,
+	};
+
+	//X,Y,Z軸周りの回転角を設定
+	worldTranceform_.rotation_ = {XM_PI/ 4.0f, XM_PI / 4.0f, 0.0f};
+
 	//ワールドトランスフォームの初期化
 	worldTranceform_.Initialize();
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 	//サウンドデータの読み込み
-	soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
+	//soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
 	//音声再生
-	audio_->PlayWave(soundDataHandle_);
+	//audio_->PlayWave(soundDataHandle_);
 	//音声再生
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	//voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 
 }   
 
@@ -44,17 +62,25 @@ void GameScene::Update() {
 	// 移動した座標をスプライトに反映
 	sprite_->SetPosition(position);
 	//スペースキーを押した瞬間
-	if (input_->TriggerKey(DIK_SPACE)) {
+	//if (input_->TriggerKey(DIK_SPACE)) {
 	   //音声停止
-		audio_->StopWave(voiceHandle_);
-	}
+		//audio_->StopWave(voiceHandle_);
+	//}
 
 	// 変数の値をインクリメント
-	value_++;
+	//value_++;
 	// 値を含んだ文字列
-	std::string strDebug = std::string("Value:") + std::to_string(value_);
+	//std::string strDebug = std::string("Value:") + std::to_string(value_);
 	//デバックテキストの表示
-	debugText_->Print(strDebug, 50, 50, 1.0f);
+	//debugText_->Print(strDebug, 50, 50, 1.0f);
+
+	//書式指定付き表示
+	debugText_->SetPos(50, 70);
+	debugText_->Printf("translation:(%f,%f,%f)", 10.0f, 10.0f, 10.0f);
+	debugText_->SetPos(50, 95);
+	debugText_->Printf("rotation:(%f,%f,%f)", XM_PI / 4.0f, XM_PI / 4.0f, 0.0f);
+	debugText_->SetPos(50, 120);
+	debugText_->Printf("scale:(%f,%f,%f)", 5.0f, 5.0f, 5.0f);
 
 }
 
@@ -99,7 +125,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+	//sprite_->Draw();
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
